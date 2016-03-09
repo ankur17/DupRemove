@@ -7,6 +7,9 @@ import sys
 p = './Folder'
 filePool = list()
 all_folder = list()
+prime_folder = list()
+nprime_folder = list()
+del_count = 0
 i = 0 
 inls =  sys.argv[1:]
 def nameExtract(s):
@@ -31,12 +34,23 @@ while True:
 		break
 
 prime_folder = nameExtract("Folder name(s) of original content: ")
-print prime_folder
 for a in prime_folder:
-	filePool += os.listdir(os.path.join(p,a))			#Check if the user enters the correct names only
-print filePool
+	filePool += os.listdir(os.path.join(p,a))			#!!!Check if the user enters the correct names only like done for all_folder
+#folders with duplicate contents
+for a in all_folder:
+	if a not in prime_folder:
+		nprime_folder.append(a)
+#removing the content
+for fol in nprime_folder:
+	for file in os.listdir(os.path.join(p,fol)):
+		if file in filePool:
+			os.remove(os.path.join(p,fol,file))
+			print "Deleted file: "+str(file) + "from folder: " + str(fol)
+			del_count += 1
+print str(del_count) + " duplicate file(s) deleted"
+print "DONE"
 
 
 
-#print sys.argv[1]
+
 
